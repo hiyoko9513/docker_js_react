@@ -1,0 +1,25 @@
+version: "3"
+services:
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+      - ./log/react:/root/.npm/_logs/
+    # command: sh -c "cd $COMPOSE_PROJECT_NAME && yarn start" #ノーマルの場合
+    command: sh -c "cd $COMPOSE_PROJECT_NAME && npm run dev" #nextの場合
+      
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/sites:/etc/nginx/conf.d
+      - ./log/nginx:/var/log/nginx
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - react

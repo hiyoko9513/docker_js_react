@@ -1,0 +1,9 @@
+.env
+mode_modules
+
+next-docker
+package-lock.json
+.vscode
+.DS_Store
+
+/log/*
